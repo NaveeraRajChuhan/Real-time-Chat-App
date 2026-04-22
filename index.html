@@ -401,4 +401,195 @@ document.addEventListener("click", function(e) {
 </script>
 
 </body>
-</html> -->
+</html> 
+
+
+
+  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!DOCTYPE html>
+<html>
+<head>
+  <title>Chat App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chat-container">
+
+  <div class="chat-header">
+    <h2>💬 Real-time Chat</h2>
+  </div>
+
+  <div class="join-box">
+    <input id="username" placeholder="Enter your name">
+    <button class="btn" onclick="join()">Join</button>
+  </div>
+
+  <ul id="messages"></ul>
+
+  <div class="chat-input">
+    <button class="emoji-btn" onclick="toggleEmoji()">😊</button>
+
+    <!-- 📷 IMAGE BUTTON -->
+    <button class="emoji-btn" onclick="openGallery()">📷</button>
+
+    <input id="msg" placeholder="Type a message">
+    <button class="btn" onclick="sendMessage()">Send</button>
+  </div>
+
+  <!-- hidden file input -->
+  <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="sendImage(event)">
+
+  <div id="emoji-picker" class="emoji-picker">
+    <span onclick="addEmoji('😀')">😀</span>
+    <span onclick="addEmoji('😂')">😂</span>
+    <span onclick="addEmoji('😍')">😍</span>
+    <span onclick="addEmoji('😎')">😎</span>
+    <span onclick="addEmoji('😢')">😢</span>
+    <span onclick="addEmoji('😡')">😡</span>
+    <span onclick="addEmoji('👍')">👍</span>
+    <span onclick="addEmoji('🙏')">🙏</span>
+    <span onclick="addEmoji('🔥')">🔥</span>
+    <span onclick="addEmoji('❤️')">❤️</span>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+const socket = io();
+let joined = false;
+let myName = "";
+
+document.getElementById("msg").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+});
+
+function join() {
+  const username = document.getElementById("username").value;
+
+  if (!username) {
+    alert("Enter username first");
+    return;
+  }
+
+  myName = username;
+  socket.emit("join", username);
+  joined = true;
+
+  document.querySelector(".join-box").style.display = "none";
+}
+
+function sendMessage() {
+  if (!joined) {
+    alert("Join first!");
+    return;
+  }
+
+  const input = document.getElementById("msg");
+  const msg = input.value;
+
+  if (!msg) return;
+
+  socket.emit("sendMessage", msg);
+
+  input.value = "";
+  input.focus();
+}
+
+socket.on("message", (data) => {
+  const li = document.createElement("li");
+
+  if (data.user === myName) {
+    li.classList.add("my-message");
+  } else {
+    li.classList.add("other-message");
+  }
+
+  // ✅ TEXT MESSAGE
+  if (data.type === "text") {
+    li.innerHTML = `
+      <span class="name">${data.user}</span>
+      <span class="text">${data.text}</span>
+    `;
+  }
+
+  // 📷 IMAGE MESSAGE
+  if (data.type === "image") {
+    li.innerHTML = `
+      <span class="name">${data.user}</span>
+      <img src="${data.image}" style="max-width:200px; border-radius:10px;">
+    `;
+  }
+
+  const messages = document.getElementById("messages");
+  messages.appendChild(li);
+
+  messages.scrollTop = messages.scrollHeight;
+});
+
+// 📷 open gallery
+function openGallery() {
+  document.getElementById("imageInput").click();
+}
+
+// 📷 send image
+function sendImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function() {
+    socket.emit("sendImage", reader.result);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+// emoji functions
+function toggleEmoji() {
+  const picker = document.getElementById("emoji-picker");
+  picker.style.display = picker.style.display === "block" ? "none" : "block";
+}
+
+function addEmoji(emoji) {
+  const input = document.getElementById("msg");
+  input.value += emoji;
+  input.focus();
+}
+
+document.addEventListener("click", function(e) {
+  const picker = document.getElementById("emoji-picker");
+  const btn = document.querySelector(".emoji-btn");
+
+  if (!picker.contains(e.target) && e.target !== btn) {
+    picker.style.display = "none";
+  }
+});
+</script>
+
+</body>
+</html>

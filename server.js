@@ -69,3 +69,25 @@ app.get("/", (req, res) => {
 server.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
 });
+
+
+
+
+
+// TEXT MESSAGE
+socket.on("sendMessage", (message) => {
+  io.emit("message", {
+    user: users[socket.id],
+    text: message,
+    type: "text"
+  });
+});
+
+// IMAGE MESSAGE
+socket.on("sendImage", (image) => {
+  io.emit("message", {
+    user: users[socket.id],
+    image: image,
+    type: "image"
+  });
+});

@@ -48,16 +48,16 @@ body{
 
 
 
+
+
+
+
+
+
+
+
+
 /* 
-
-
-
-
-
-
-
-
-
 
 * {
   margin: 0;
@@ -185,8 +185,6 @@ body {
   background: #b366ff;
 } */
 
-
-
 * {
   margin: 0;
   padding: 0;
@@ -202,7 +200,6 @@ body {
   height: 100vh;
 }
 
-/* Container */
 .chat-container {
   width: 350px;
   height: 600px;
@@ -215,7 +212,6 @@ body {
   position: relative;
 }
 
-/* Header */
 .chat-header {
   background: #6a0dad;
   color: white;
@@ -223,7 +219,6 @@ body {
   padding: 15px;
 }
 
-/* Join */
 .join-box {
   display: flex;
   padding: 10px;
@@ -239,7 +234,6 @@ body {
   outline: none;
 }
 
-/* Messages */
 #messages {
   list-style: none;
   flex: 1;
@@ -250,7 +244,6 @@ body {
   gap: 10px;
 }
 
-/* Message bubbles */
 #messages li {
   max-width: 70%;
   padding: 10px;
@@ -280,7 +273,13 @@ body {
   font-size: 14px;
 }
 
-/* Input */
+/* IMAGE */
+.chat-img {
+  width: 150px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
 .chat-input {
   display: flex;
   padding: 10px;
@@ -297,7 +296,6 @@ body {
   outline: none;
 }
 
-/* Button */
 .btn {
   padding: 10px 15px;
   background: #9b30ff;
@@ -305,22 +303,20 @@ body {
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .btn:hover {
   background: #b366ff;
 }
 
-/* Emoji Button */
-.emoji-btn {
+.emoji-btn,
+.image-btn {
   background: transparent;
   border: none;
   font-size: 22px;
   cursor: pointer;
 }
 
-/* Emoji Picker */
 .emoji-picker {
   position: absolute;
   bottom: 70px;
