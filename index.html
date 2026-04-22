@@ -263,7 +263,7 @@ socket.on("message", (data) => {
 
 
 <!------------------------------------------------------------------- forth ui -->
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>Chat App</title>
@@ -273,28 +273,27 @@ socket.on("message", (data) => {
 
 <div class="chat-container">
 
-  <!-- Header -->
+
   <div class="chat-header">
     <h2>💬 Real-time Chat</h2>
   </div>
 
-  <!-- Join Section -->
+
   <div class="join-box">
     <input id="username" placeholder="Enter your name">
     <button class="btn" onclick="join()">Join</button>
   </div>
 
-  <!-- Messages -->
   <ul id="messages"></ul>
 
-  <!-- Input -->
+ 
   <div class="chat-input">
     <button class="emoji-btn" onclick="toggleEmoji()">😊</button>
     <input id="msg" placeholder="Type a message">
     <button class="btn" onclick="sendMessage()">Send</button>
   </div>
 
-  <!-- Emoji Picker -->
+
   <div id="emoji-picker" class="emoji-picker">
     <span onclick="addEmoji('😀')">😀</span>
     <span onclick="addEmoji('😂')">😂</span>
@@ -317,7 +316,7 @@ const socket = io();
 let joined = false;
 let myName = "";
 
-// ENTER KEY SEND
+
 document.getElementById("msg").addEventListener("keypress", function(e) {
   if (e.key === "Enter") {
     sendMessage();
@@ -339,7 +338,7 @@ function join() {
   document.querySelector(".join-box").style.display = "none";
 }
 
-// SEND MESSAGE
+
 function sendMessage() {
   if (!joined) {
     alert("Join first!");
@@ -357,7 +356,7 @@ function sendMessage() {
   input.focus();
 }
 
-// RECEIVE MESSAGE
+
 socket.on("message", (data) => {
   const li = document.createElement("li");
 
@@ -378,7 +377,7 @@ socket.on("message", (data) => {
   messages.scrollTop = messages.scrollHeight;
 });
 
-// ✅ EMOJI FUNCTIONS
+
 function toggleEmoji() {
   const picker = document.getElementById("emoji-picker");
   picker.style.display = picker.style.display === "block" ? "none" : "block";
@@ -390,7 +389,7 @@ function addEmoji(emoji) {
   input.focus();
 }
 
-// CLOSE EMOJI IF CLICK OUTSIDE
+
 document.addEventListener("click", function(e) {
   const picker = document.getElementById("emoji-picker");
   const btn = document.querySelector(".emoji-btn");
@@ -402,4 +401,4 @@ document.addEventListener("click", function(e) {
 </script>
 
 </body>
-</html>
+</html> -->
