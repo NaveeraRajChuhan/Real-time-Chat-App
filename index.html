@@ -142,6 +142,127 @@ document.getElementById("msg").addEventListener("keypress", function(e) {
 
 
 <!------------------------------------------------------------------- third ui -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Chat App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chat-container">
+
+
+  <div class="chat-header">
+    <h2>💬 Real-time Chat</h2>
+  </div>
+
+
+  <div class="join-box">
+    <input id="username" placeholder="Enter your name">
+    <button class="btn" onclick="join()">Join</button>
+  </div>
+
+
+  <ul id="messages"></ul>
+
+
+  <div class="chat-input">
+    <input id="msg" placeholder="Type a message">
+    <button class="btn" onclick="sendMessage()">Send</button>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+const socket = io();
+let joined = false;
+let myName = "";
+
+
+document.getElementById("msg").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+});
+
+function join() {
+  const username = document.getElementById("username").value;
+
+  if (!username) {
+    alert("Enter username first");
+    return;
+  }
+
+  myName = username;
+  socket.emit("join", username);
+  joined = true;
+
+  document.querySelector(".join-box").style.display = "none";
+}
+
+
+function sendMessage() {
+  if (!joined) {
+    alert("Join first!");
+    return;
+  }
+
+  const input = document.getElementById("msg");
+  const msg = input.value;
+
+  if (!msg) return;
+
+  socket.emit("sendMessage", msg);
+
+  input.value = "";
+  input.focus();
+}
+
+
+socket.on("message", (data) => {
+  const li = document.createElement("li");
+
+
+  if (data.user === myName) {
+    li.classList.add("my-message");
+  } else {
+    li.classList.add("other-message");
+  }
+
+  li.innerHTML = `
+    <span class="name">${data.user}</span>
+    <span class="text">${data.text}</span>
+  `;
+
+  const messages = document.getElementById("messages");
+  messages.appendChild(li);
+
+  // ✅ AUTO SCROLL TO BOTTOM
+  messages.scrollTop = messages.scrollHeight;
+});
+</script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!------------------------------------------------------------------- forth ui -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -168,8 +289,23 @@ document.getElementById("msg").addEventListener("keypress", function(e) {
 
   <!-- Input -->
   <div class="chat-input">
+    <button class="emoji-btn" onclick="toggleEmoji()">😊</button>
     <input id="msg" placeholder="Type a message">
     <button class="btn" onclick="sendMessage()">Send</button>
+  </div>
+
+  <!-- Emoji Picker -->
+  <div id="emoji-picker" class="emoji-picker">
+    <span onclick="addEmoji('😀')">😀</span>
+    <span onclick="addEmoji('😂')">😂</span>
+    <span onclick="addEmoji('😍')">😍</span>
+    <span onclick="addEmoji('😎')">😎</span>
+    <span onclick="addEmoji('😢')">😢</span>
+    <span onclick="addEmoji('😡')">😡</span>
+    <span onclick="addEmoji('👍')">👍</span>
+    <span onclick="addEmoji('🙏')">🙏</span>
+    <span onclick="addEmoji('🔥')">🔥</span>
+    <span onclick="addEmoji('❤️')">❤️</span>
   </div>
 
 </div>
@@ -225,7 +361,6 @@ function sendMessage() {
 socket.on("message", (data) => {
   const li = document.createElement("li");
 
-  // Check sender
   if (data.user === myName) {
     li.classList.add("my-message");
   } else {
@@ -240,8 +375,29 @@ socket.on("message", (data) => {
   const messages = document.getElementById("messages");
   messages.appendChild(li);
 
-  // ✅ AUTO SCROLL TO BOTTOM
   messages.scrollTop = messages.scrollHeight;
+});
+
+// ✅ EMOJI FUNCTIONS
+function toggleEmoji() {
+  const picker = document.getElementById("emoji-picker");
+  picker.style.display = picker.style.display === "block" ? "none" : "block";
+}
+
+function addEmoji(emoji) {
+  const input = document.getElementById("msg");
+  input.value += emoji;
+  input.focus();
+}
+
+// CLOSE EMOJI IF CLICK OUTSIDE
+document.addEventListener("click", function(e) {
+  const picker = document.getElementById("emoji-picker");
+  const btn = document.querySelector(".emoji-btn");
+
+  if (!picker.contains(e.target) && e.target !== btn) {
+    picker.style.display = "none";
+  }
 });
 </script>
 
