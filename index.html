@@ -2,18 +2,21 @@
 <html>
 <head>
   <title>Chat App</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    
 
 <h2>Real-time Chat</h2>
 
 <input id="username" placeholder="Enter name">
-<button onclick="join()">Join</button>
+<button class="btn-glass" onclick="join()">Join</button>
 
 <ul id="messages"></ul>
 
 <input id="msg" placeholder="Type message">
-<button onclick="sendMessage()">Send</button>
+<button class="btn-glass" onclick="sendMessage()">Send</button>
 
 <script src="/socket.io/socket.io.js"></script>
 

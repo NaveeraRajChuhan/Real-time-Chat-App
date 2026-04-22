@@ -1,0 +1,39 @@
+body{
+    background-color: palevioletred;
+}
+
+
+
+/* .btn-3d {
+  padding: 12px 25px;
+  background: #6a0dad;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 5px #4b0082;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-3d:active {
+  box-shadow: 0 2px #4b0082;
+  transform: translateY(3px);
+} */
+
+
+
+
+   .btn-glass {
+  padding: 12px 25px;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-glass:hover {
+  background: rgba(155, 48, 255, 0.3);
+}
