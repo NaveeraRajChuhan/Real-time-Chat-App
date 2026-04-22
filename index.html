@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat App</title>
+</head>
+<body>
+
+<h2>Real-time Chat</h2>
+
+<input id="username" placeholder="Enter name">
+<button onclick="join()">Join</button>
+
+<ul id="messages"></ul>
+
+<input id="msg" placeholder="Type message">
+<button onclick="sendMessage()">Send</button>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  const socket = io();
+
+  function join() {
+    const username = document.getElementById("username").value;
+    socket.emit("join", username);
+  }
+
+  function sendMessage() {
+    const msg = document.getElementById("msg").value;
+    socket.emit("sendMessage", msg);
+  }
+
+  socket.on("message", (data) => {
+    const li = document.createElement("li");
+    li.innerText = data.user + ": " + data.text;
+    document.getElementById("messages").appendChild(li);
+  });
+</script>
+
+</body>
+</html>
